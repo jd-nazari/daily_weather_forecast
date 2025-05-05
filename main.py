@@ -3,12 +3,12 @@ import requests ## for get api
 
 
 ### api detail for reach weather info
-KEY = "51fb54f0d12a82af5c6de73b81b28dce"  ## wheater map api key
+KEY = "YOUR API KEY"  ## wheater map api key
 ENDPOINT = "https://api.openweathermap.org/data/2.5/forecast"  ## weather map endpoint
 
 ## main lat long
-LAT = 38.096237
-LON = 46.273800
+LAT = "Latitude" ## your favorite location
+LON = "Longitude"  ## your favorite location
 
 
 # ## rainy location for test
@@ -33,12 +33,12 @@ response = requests.get(url=ENDPOINT, params=params)
 # print(response.text)
 
 weather_data = response.json()
-today_data = weather_data["list"][:5]
+today_data = weather_data["list"][:5] ### for next 15 hour
 # print(today_data)
 # print(len(today_data))
 rainy = False
 snowy = False
-## is today get rainy???? in the 9 hour of day from 10 at morning to 18 at evening
+## is today get rainy???? in the 15 hour 
 for weather in today_data:
    condition_code = weather["weather"][0]["id"]
    # condition_code = 601  ## for test
@@ -51,31 +51,22 @@ for weather in today_data:
 # print(rainy)
 # print(snowy)
 
-# send_params = { 
-#   "from": "50002710087321", 
-#   "to": ["09390687321", "09145804467"], 
-#   "text": "امروز با احتمال فراوان باران می بارد\nباران ببار ببار و زمین را سیراب کن",
-#   "udh": ""
-# }
-
 ### send sms detail
-source_num = '50002710087321'
+source_num = 'SOURCE NUM'
 
-send_to = ["09390687321","09914066587","09374475352","09338518314","09058419906","09901300672","09305028607"]
-# print(len(send_to))
+send_to = "YOUR DESTINATION" ## your destination num or nums
 
+api_end_3 = 'SEND SMS API'
 
+text = "Rainy"
+text_2 = "Snowy"
 
-# api_end = 'https://console.melipayamak.com/api/send/simple/15ae8331315d409aa36b8217408b7677'
-# api_end_2 = 'https://console.melipayamak.com/api/send/advanced/15ae8331315d409aa36b8217408b7677'
-api_end_3 = 'https://console.melipayamak.com/api/send/multiple/15ae8331315d409aa36b8217408b7677'
-
-text = "\nسلام\nامروز با احتمال فراوان باران می بارد\nباران ببار ببار و زمین را سیراب کن"
-text_2 = "\nسلام\nامروز با احتمال فراوان برف می بارد\nبرف ببار ببار و زمین را سیراب کن"
-
+### how many peaple do you want to recive sms
 text_multiple_1 = [text, text, text, text, text, text, text]
 text_multiple_2 = [text_2, text_2, text_2, text_2, text_2, text_2, text_2]
 
+
+## finally send the message
 if rainy:
     data = {'from':source_num, 'to':send_to, 'text':text_multiple_1, 'udh':''}
     response = requests.post(api_end_3, json=data)
